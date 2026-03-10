@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>CS Dictionary</title>
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    text-align:center;
+    padding:40px;
+}
+.container{
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    width:500px;
+    margin:auto;
+    box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+input{
+    padding:10px;
+    width:70%;
+    margin:10px;
+}
+button{
+    padding:10px 20px;
+    margin:10px;
+    cursor:pointer;
+}
+#explanation{
+    margin-top:20px;
+    font-size:18px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>Computer Science Dictionary</h2>
+
+<input type="text" id="wordInput" placeholder="Enter a word">
+<br>
+<button onclick="searchWord()">Search</button>
+
+<div id="explanation"></div>
+
+<div id="buttons" style="display:none;">
+<button onclick="understood()">I Understand</button>
+<button onclick="notUnderstood()">Explain Better</button>
+</div>
+
+</div>
+
+<script>
+
+const cs_dictionary = {
+"Polymorphism":[
+"In programming, the same function name can work differently for different objects.",
+"Polymorphism means one method name can perform different tasks depending on the object that calls it.",
+"Polymorphism is a paradigm in object-oriented programming where entities such as functions or methods exhibit behavior that varies depending on the type, interface, or inheritance hierarchy."
+],
+
+"Encapsulation":[
+"In OOP, data is kept private and accessed through functions.",
+"Encapsulation hides class data and allows access only through defined methods.",
+"Encapsulation is a design principle that restricts direct access to an object’s internal state while exposing controlled interfaces."
+],
+
+"Concurrency":[
+"A program handles multiple tasks using threads or async execution.",
+"Concurrency allows multiple tasks in a program to run at overlapping times.",
+"Concurrency refers to the structured composition of independently executing computational processes."
+],
+
+"Recursion":[
+"A function in code calls itself until a stopping condition is met.",
+"Recursion is when a function solves a problem by calling itself on smaller inputs.",
+"Recursion is a computational strategy where a function invokes itself with modified parameters until a base condition stops it."
+],
+
+"Idempotent":[
+"Repeating the same request does not change the final result.",
+"An idempotent operation gives the same result even if executed multiple times.",
+"An operation is idempotent if repeated applications produce an identical system state."
+]
+};
+
+let currentWord="";
+let level=0;
+
+function searchWord(){
+
+const word=document.getElementById("wordInput").value;
+const formatted=word.charAt(0).toUpperCase()+word.slice(1).toLowerCase();
+
+if(!(formatted in cs_dictionary)){
+document.getElementById("explanation").innerHTML="Word not found in dictionary";
+document.getElementById("buttons").style.display="none";
+return;
+}
+
+currentWord=formatted;
+level=0;
+
+showExplanation();
+}
+
+function showExplanation(){
+document.getElementById("explanation").innerHTML=
+"<b>Explanation:</b> "+cs_dictionary[currentWord][level];
+
+document.getElementById("buttons").style.display="block";
+}
+
+function understood(){
+document.getElementById("explanation").innerHTML=
+"Hope you understood the word!";
+document.getElementById("buttons").style.display="none";
+}
+
+function notUnderstood(){
+level++;
+
+if(level>=3){
+document.getElementById("explanation").innerHTML=
+"Sorry, explanation limit exceeded.";
+document.getElementById("buttons").style.display="none";
+}else{
+showExplanation();
+}
+}
+
+</script>
+
+</body>
+</html>
